@@ -106,14 +106,14 @@ See the [Related html file](./examples/output/task_mermaid.html).
 --------
 
 
-> 📚 **More Examples**: Visit the [examples folder](./examples) for 8+ complete, runnable examples covering:
+> 📚 **More Examples**: Visit the [examples folder](https://github.com/Maxlo24/pydantic-visualizer/blob/main/examples) for 8+ complete, runnable examples covering:
 > - Basic usage and nested models
 > - Enum handling and custom colors
 > - Complex relationships and self-referencing models
 > - Saving to Markdown/HTML and browser preview
 > - Adding multiple models to one diagram
 >
-> See the [Examples README](./examples/README.md) for detailed descriptions and usage instructions.
+> See the [Examples README](https://github.com/Maxlo24/pydantic-visualizer/blob/main/examples/README.md) for detailed descriptions and usage instructions.
 
 ## 🎨 Diagram Features
 
@@ -161,8 +161,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📮 Contact & Support
 
-- **Issues**: [GitHub Issues](https://https://github.com/Maxlo24/pydantic-visualizer/issues)
-- **Discussions**: [GitHub Discussions](https://https://github.com/Maxlo24/pydantic-visualizer/discussions)
+- **Repo**: [GitHub Repo](https://github.com/Maxlo24/pydantic-visualizer)
+- **Issues**: [GitHub Issues](https://github.com/Maxlo24/pydantic-visualizer/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/Maxlo24/pydantic-visualizer/discussions)
 
 ## 🗺️ Roadmap
 
