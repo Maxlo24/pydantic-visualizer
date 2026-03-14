@@ -77,12 +77,22 @@ class PydanticVisualizer:
         Args:
             model_cls: A Pydantic BaseModel class to visualize
 
+        Raises:
+            TypeError: If model_cls is not a Pydantic BaseModel class
+
         Example:
             >>> visualizer = PydanticVisualizer()
             >>> visualizer.set_datamodel(User)
             >>> # Later, visualize a different model
             >>> visualizer.set_datamodel(Product)
         """
+        # Validate that model_cls is a BaseModel
+        if not is_basemodel_type(model_cls):
+            raise TypeError(
+                f"Expected a Pydantic BaseModel class, but got {type(model_cls).__name__}. "
+                f"Please ensure the class inherits from pydantic.BaseModel."
+            )
+
         # Reset state containers
         self.model_cls = model_cls
         self.title = model_cls.__name__  # Set title to class name
@@ -105,6 +115,9 @@ class PydanticVisualizer:
         Args:
             model_cls: A Pydantic BaseModel class to add to the visualization
 
+        Raises:
+            TypeError: If model_cls is not a Pydantic BaseModel class
+
         Example:
             >>> visualizer = PydanticVisualizer()
             >>> visualizer.set_datamodel(User)
@@ -112,6 +125,13 @@ class PydanticVisualizer:
             >>> visualizer.add_model(Order)
             >>> # Title will be "User + Product + Order"
         """
+        # Validate that model_cls is a BaseModel
+        if not is_basemodel_type(model_cls):
+            raise TypeError(
+                f"Expected a Pydantic BaseModel class, but got {type(model_cls).__name__}. "
+                f"Please ensure the class inherits from pydantic.BaseModel."
+            )
+
         # Update title to include the new class name
         if self.title and self.title != "Diagram":
             self.title = f"{self.title} + {model_cls.__name__}"
@@ -532,6 +552,45 @@ class PydanticVisualizer:
             lines.extend(class_def)
         return "\n".join(lines)
 
+    def _resolve_output_path(self, output_folder: str | Path | None, file_extension: str) -> Path:
+        """
+        Resolve the output path based on whether it's a folder or file path.
+
+        Args:
+            output_folder: Folder path or file path. If None, uses current directory.
+            file_extension: The file extension to use (e.g., '.md' or '.html')
+
+        Returns:
+            Path: The resolved output file path
+        """
+        if output_folder is None:
+            output_folder = Path("./")
+        else:
+            output_folder = Path(output_folder)
+
+        # Check if it's a file path or folder path
+        if output_folder.suffix == file_extension:
+            # It's a file path, use it directly
+            output_path = output_folder
+            # Ensure parent directory exists
+            output_path.parent.mkdir(parents=True, exist_ok=True)
+        else:
+            # It's a folder path, generate filename
+            output_folder.mkdir(parents=True, exist_ok=True)
+
+            # Generate filename based on title
+            title_parts = self.title.split(" + ")
+            if len(title_parts) > 5:
+                # Use first class name + number of other classes
+                filename_title = f"{title_parts[0]} + {len(title_parts) - 1} other classes"
+            else:
+                filename_title = self.title
+
+            filename = f"{filename_title.lower()}_mermaid{file_extension}"
+            output_path = output_folder / filename
+
+        return output_path
+
     def save_markdown(
         self,
         output_folder: str | Path | None = None,
@@ -543,23 +602,16 @@ class PydanticVisualizer:
         Save the diagram as a Markdown file with embedded Mermaid syntax.
 
         Args:
-            output_folder: Folder path where to save the file. If None, uses current directory "./".
-            (The filename is automatically set to {title}_mermaid.md)
+            output_folder: Folder path or file path where to save the file.
+                If None, uses current directory "./".
+                If a folder path, the filename is automatically set to {title}_mermaid.md.
+                If a file path (ending with .md), uses it directly as the output path.
             include_diagram: Whether to include the Mermaid diagram. Default: True
             include_enums: Whether to include enum tables. Default: True
             include_description: Whether to include model description tables. Default: True
         """
-        if output_folder is None:
-            output_folder = Path("./")
-        else:
-            output_folder = Path(output_folder)
-
-        # Ensure the folder exists
-        output_folder.mkdir(parents=True, exist_ok=True)
-
-        # Enforce the filename format
-        filename = f"{self.title.lower()}_mermaid.md"
-        output_path = output_folder / filename
+        # Resolve the output path
+        output_path = self._resolve_output_path(output_folder, ".md")
 
         # Build the content based on parameters
         content = self.markdown(include_diagram, include_enums, include_description)
@@ -578,23 +630,16 @@ class PydanticVisualizer:
         Save the diagram as an HTML file.
 
         Args:
-            output_folder: Folder path where to save the file. If None, uses current directory "./".
-            (The filename is automatically set to {title}_mermaid.html)
+            output_folder: Folder path or file path where to save the file.
+                If None, uses current directory "./".
+                If a folder path, the filename is automatically set to {title}_mermaid.html.
+                If a file path (ending with .html), uses it directly as the output path.
             include_diagram: Whether to include the Mermaid diagram. Default: True
             include_enums: Whether to include enum tables. Default: True
             include_description: Whether to include model description tables. Default: True
         """
-        if output_folder is None:
-            output_folder = Path("./")
-        else:
-            output_folder = Path(output_folder)
-
-        # Ensure the folder exists
-        output_folder.mkdir(parents=True, exist_ok=True)
-
-        # Enforce the filename format
-        filename = f"{self.title.lower()}_mermaid.html"
-        output_path = output_folder / filename
+        # Resolve the output path
+        output_path = self._resolve_output_path(output_folder, ".html")
 
         # Build the content based on parameters
         content = self.html(include_diagram, include_enums, include_description)
