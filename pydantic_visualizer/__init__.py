@@ -7,5 +7,5 @@ making it easy to understand complex data structures and their relationships.
 
 from .pydantic_visualizer import PydanticVisualizer
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 __all__ = ["PydanticVisualizer"]
