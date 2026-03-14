@@ -182,6 +182,7 @@ build/
 
 # Example outputs
 examples/*.md
+!examples/README.md
 examples/*.html
 output_diagram.*
 
