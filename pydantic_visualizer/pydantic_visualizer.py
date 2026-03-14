@@ -22,16 +22,16 @@ from .type_checkers import (
 class PydanticVisualizer:
     """
     A visualizer that converts Pydantic models to Mermaid class diagrams.
-    
+
     This class analyzes Pydantic models and their relationships, generating
     Mermaid diagram syntax that can be rendered as class diagrams. It supports
     nested models, enums, optional fields, and lists.
-    
+
     Args:
         object_color: Hex color for regular object classes
         list_color: Hex color for list-type classes
         enum_color: Hex color for enum classes
-        
+
     Example:
         >>> from pydantic import BaseModel
         >>> from pydantic_visualizer import PydanticVisualizer
@@ -70,13 +70,13 @@ class PydanticVisualizer:
     def set_datamodel(self, model_cls: type[BaseModel]) -> None:
         """
         Set or reset the data model to visualize.
-        
+
         This method resets all internal state and processes the new model.
         The title is automatically set to the class name.
-        
+
         Args:
             model_cls: A Pydantic BaseModel class to visualize
-            
+
         Example:
             >>> visualizer = PydanticVisualizer()
             >>> visualizer.set_datamodel(User)
@@ -99,7 +99,7 @@ class PydanticVisualizer:
     def mermaid(self) -> str:
         """
         Returns the complete Mermaid diagram string for the model.
-        
+
         Returns:
             A string containing the Mermaid diagram syntax
         """
@@ -109,16 +109,16 @@ class PydanticVisualizer:
         self,
         include_diagram: bool = True,
         include_enums: bool = True,
-        include_description: bool = True
+        include_description: bool = True,
     ) -> str:
         """
         Returns the complete Markdown document with embedded Mermaid diagram.
-        
+
         Args:
             include_diagram: Whether to include the Mermaid diagram. Default: True
             include_enums: Whether to include enum tables. Default: True
             include_description: Whether to include model description tables. Default: True
-        
+
         Returns:
             A string containing the Markdown document with Mermaid syntax
         """
@@ -139,48 +139,48 @@ class PydanticVisualizer:
         self,
         include_diagram: bool = True,
         include_enums: bool = True,
-        include_description: bool = True
+        include_description: bool = True,
     ) -> str:
         """
         Returns the complete HTML document with embedded Mermaid diagram.
-        
+
         Args:
             include_diagram: Whether to include the Mermaid diagram. Default: True
             include_enums: Whether to include enum tables. Default: True
             include_description: Whether to include model description tables. Default: True
-        
+
         Returns:
             A string containing the complete HTML document with Mermaid syntax
         """
         html_parts = [
-            '<!DOCTYPE html>',
-            '<html>',
-            '<head>',
+            "<!DOCTYPE html>",
+            "<html>",
+            "<head>",
             '<meta charset="UTF-8">',
-            f'<title>{self.title} Diagram</title>',
+            f"<title>{self.title} Diagram</title>",
             '<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>',
-            '<script>mermaid.initialize({startOnLoad:true});</script>',
-            '<style>',
+            "<script>mermaid.initialize({startOnLoad:true});</script>",
+            "<style>",
             'body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; margin: 20px; background-color: #f5f5f5; }',
-            f'h1 {{ color: #333; border-bottom: 3px solid {self.html_color}; padding-bottom: 10px; }}',
-            'h2 { color: #555; margin-top: 30px; }',
-            'h2 + p { color: #666; font-style: italic; margin: 10px 0; }',
-            'h4 { color: #666; margin-top: 20px; }',
-            'table.dataframe { border-collapse: collapse; width: 100%; margin: 20px 0; background-color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }',
-            f'table.dataframe thead {{ background-color: {self.html_color}; color: white; }}',
-            'table.dataframe th { padding: 12px; text-align: left; font-weight: 600; border: none; }',
-            'table.dataframe td { padding: 10px 12px; border-bottom: 1px solid #ddd; }',
-            'table.dataframe tbody tr:hover { background-color: #f5f5f5; }',
-            f'table.dataframe tbody tr:last-child td {{ border-bottom: 2px solid {self.html_color}; }}',
+            f"h1 {{ color: #333; border-bottom: 3px solid {self.html_color}; padding-bottom: 10px; }}",
+            "h2 { color: #555; margin-top: 30px; }",
+            "h2 + p { color: #666; font-style: italic; margin: 10px 0; }",
+            "h4 { color: #666; margin-top: 20px; }",
+            "table.dataframe { border-collapse: collapse; width: 100%; margin: 20px 0; background-color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }",
+            f"table.dataframe thead {{ background-color: {self.html_color}; color: white; }}",
+            "table.dataframe th { padding: 12px; text-align: left; font-weight: 600; border: none; }",
+            "table.dataframe td { padding: 10px 12px; border-bottom: 1px solid #ddd; }",
+            "table.dataframe tbody tr:hover { background-color: #f5f5f5; }",
+            f"table.dataframe tbody tr:last-child td {{ border-bottom: 2px solid {self.html_color}; }}",
             'code { background-color: #f4f4f4; padding: 2px 6px; border-radius: 3px; font-family: "Courier New", monospace; color: #000; font-weight: bold; }',
-            '.mermaid { background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin: 20px 0; }',
-            '</style>',
-            '</head>',
-            '<body>'
+            ".mermaid { background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin: 20px 0; }",
+            "</style>",
+            "</head>",
+            "<body>",
         ]
 
         if include_diagram:
-            html_parts.append(f'<center><h1>{self.title} Diagram</h1></center>')
+            html_parts.append(f"<center><h1>{self.title} Diagram</h1></center>")
             html_parts.append(f'<center><div class="mermaid">\n{self.mermaid}\n</div></center>')
 
         if include_enums and len(self.enum_dict) > 0:
@@ -189,7 +189,7 @@ class PydanticVisualizer:
         if include_description:
             html_parts.append(self.description_html_tables)
 
-        html_parts.extend(['</body>', '</html>'])
+        html_parts.extend(["</body>", "</html>"])
 
         return "\n".join(html_parts)
 
@@ -197,9 +197,9 @@ class PydanticVisualizer:
     def description(self) -> str:
         """
         Returns a markdown description with tables for each class and subclass.
-        
+
         Each table includes field name, type, description, default value, and examples.
-        
+
         Returns:
             A string containing markdown tables describing all models
         """
@@ -214,7 +214,7 @@ class PydanticVisualizer:
     def enum_tables(self) -> dict[str, pd.DataFrame]:
         """
         Returns a dictionary of pandas DataFrames for each enum.
-        
+
         Returns:
             A dictionary where keys are enum names and values are DataFrames
         """
@@ -224,7 +224,7 @@ class PydanticVisualizer:
     def enum_markdown_tables(self) -> str:
         """
         Generates markdown tables for enums using pandas to_markdown().
-        
+
         Returns:
             A string containing markdown tables for all enums
         """
@@ -242,7 +242,7 @@ class PydanticVisualizer:
     def enum_html_tables(self) -> str:
         """
         Generates HTML tables for enums using pandas to_html().
-        
+
         Returns:
             A string containing HTML tables for all enums
         """
@@ -256,7 +256,7 @@ class PydanticVisualizer:
             lines.append(f"<h4>{enum_name}</h4>")
             html_table = df.to_html(index=False, escape=False)
             # Convert backtick-wrapped text to <code> tags
-            html_table = re.sub(r'`([^`]+)`', r'<code>\1</code>', html_table)
+            html_table = re.sub(r"`([^`]+)`", r"<code>\1</code>", html_table)
             lines.append(html_table)
         return "\n".join(lines)
 
@@ -264,30 +264,24 @@ class PydanticVisualizer:
     def description_tables(self) -> dict[str, pd.DataFrame]:
         """
         Returns a dictionary of pandas DataFrames for each model's description.
-        
+
         Returns:
             A dictionary where keys are model names and values are DataFrames
         """
         description_dfs = {}
 
         for cls in self.all_classes:
-            data = {
-                'Field': [],
-                'Type': [],
-                'Description': [],
-                'Default': [],
-                'Examples': []
-            }
+            data = {"Field": [], "Type": [], "Description": [], "Default": [], "Examples": []}
 
             for field_name, field in cls.__pydantic_fields__.items():
                 # Field name
-                data['Field'].append(f"`{field_name}`")
+                data["Field"].append(f"`{field_name}`")
 
                 # Type
-                data['Type'].append(self._format_annotation(field.annotation))
+                data["Type"].append(self._format_annotation(field.annotation))
 
                 # Description
-                data['Description'].append(field.description or "")
+                data["Description"].append(field.description or "")
 
                 # Default value
                 default_str = ""
@@ -295,18 +289,21 @@ class PydanticVisualizer:
                     default_str = f"`{field.default}`"
                 elif field.default_factory is not None:
                     default_str = "`<factory>`"
-                data['Default'].append(default_str)
+                data["Default"].append(default_str)
 
                 # Examples
                 examples_str = ""
-                if hasattr(field, 'examples') and field.examples:
+                if hasattr(field, "examples") and field.examples:
                     examples_str = ", ".join(f"`{ex}`" for ex in field.examples)
-                elif hasattr(field, 'json_schema_extra') and field.json_schema_extra:
-                    if isinstance(field.json_schema_extra, dict) and 'examples' in field.json_schema_extra:
-                        examples = field.json_schema_extra['examples']
+                elif hasattr(field, "json_schema_extra") and field.json_schema_extra:
+                    if (
+                        isinstance(field.json_schema_extra, dict)
+                        and "examples" in field.json_schema_extra
+                    ):
+                        examples = field.json_schema_extra["examples"]
                         if isinstance(examples, list):
                             examples_str = ", ".join(f"`{ex}`" for ex in examples)
-                data['Examples'].append(examples_str)
+                data["Examples"].append(examples_str)
 
             df = pd.DataFrame(data)
             # Remove columns where all values are empty strings
@@ -319,7 +316,7 @@ class PydanticVisualizer:
     def description_markdown_tables(self) -> str:
         """
         Generates markdown tables for model descriptions using pandas to_markdown().
-        
+
         Returns:
             A string containing markdown tables for all models
         """
@@ -341,7 +338,7 @@ class PydanticVisualizer:
     def description_html_tables(self) -> str:
         """
         Generates HTML tables for model descriptions using pandas to_html().
-        
+
         Returns:
             A string containing HTML tables for all models
         """
@@ -358,7 +355,7 @@ class PydanticVisualizer:
             df = self.description_tables[cls.__name__]
             html_table = df.to_html(index=False, escape=False)
             # Convert backtick-wrapped text to <code> tags
-            html_table = re.sub(r'`([^`]+)`', r'<code>\1</code>', html_table)
+            html_table = re.sub(r"`([^`]+)`", r"<code>\1</code>", html_table)
             lines.append(html_table)
 
         return "\n".join(lines)
@@ -390,8 +387,8 @@ class PydanticVisualizer:
         if is_enum_type(typ):
             # Create DataFrame directly from enum members
             data = {
-                'ENUM': [f"`{key}`" for key in typ.__members__.keys()],
-                'Value': [member.value for member in typ.__members__.values()]
+                "ENUM": [f"`{key}`" for key in typ.__members__.keys()],
+                "Value": [member.value for member in typ.__members__.values()],
             }
             self.enum_dict[typ.__name__] = pd.DataFrame(data)
             return f"Enum.{typ.__name__}"
@@ -423,11 +420,7 @@ class PydanticVisualizer:
 
         if origin in (list, list) and args:
             item = args[0]
-            item_str = (
-                self._format_annotation(item)
-                if get_origin(item)
-                else self._type_name(item)
-            )
+            item_str = self._format_annotation(item) if get_origin(item) else self._type_name(item)
             return f"List[{item_str}]"
 
         if origin is not None and args:
@@ -445,7 +438,9 @@ class PydanticVisualizer:
         if cls_name in self.seen_classes:
             return
         self.seen_classes.add(cls_name)
-        self.all_classes.append(cls)  # Track for description tables (only added once due to seen_classes check)
+        self.all_classes.append(
+            cls
+        )  # Track for description tables (only added once due to seen_classes check)
 
         class_def = [f"class {cls_name} {{"]
 
@@ -475,9 +470,7 @@ class PydanticVisualizer:
                         is_optional=field_is_optional,
                     )
             elif is_basemodel_type(ann_unwrapped):
-                self._add_class(
-                    ann_unwrapped, is_list=False, is_optional=field_is_optional
-                )
+                self._add_class(ann_unwrapped, is_list=False, is_optional=field_is_optional)
                 self._add_relationship(
                     cls_name, ann_unwrapped.__name__, is_optional=field_is_optional
                 )
@@ -518,11 +511,11 @@ class PydanticVisualizer:
         output_folder: str | Path | None = None,
         include_diagram: bool = True,
         include_enums: bool = True,
-        include_description: bool = True
+        include_description: bool = True,
     ) -> None:
         """
         Save the diagram as a Markdown file with embedded Mermaid syntax.
-        
+
         Args:
             output_folder: Folder path where to save the file. If None, uses current directory "./".
             (The filename is automatically set to {title}_mermaid.md)
@@ -543,11 +536,7 @@ class PydanticVisualizer:
         output_path = output_folder / filename
 
         # Build the content based on parameters
-        content = self.markdown(
-            include_diagram,
-            include_enums,
-            include_description
-        )
+        content = self.markdown(include_diagram, include_enums, include_description)
 
         with open(output_path, "w") as file:
             file.write(content)
@@ -557,11 +546,11 @@ class PydanticVisualizer:
         output_folder: str | Path | None = None,
         include_diagram: bool = True,
         include_enums: bool = True,
-        include_description: bool = True
+        include_description: bool = True,
     ) -> None:
         """
         Save the diagram as an HTML file.
-        
+
         Args:
             output_folder: Folder path where to save the file. If None, uses current directory "./".
             (The filename is automatically set to {title}_mermaid.html)
@@ -582,11 +571,7 @@ class PydanticVisualizer:
         output_path = output_folder / filename
 
         # Build the content based on parameters
-        content = self.html(
-            include_diagram,
-            include_enums,
-            include_description
-        )
+        content = self.html(include_diagram, include_enums, include_description)
 
         with open(output_path, "w") as file:
             file.write(content)
@@ -595,14 +580,14 @@ class PydanticVisualizer:
         self,
         include_diagram: bool = True,
         include_enums: bool = True,
-        include_description: bool = True
+        include_description: bool = True,
     ) -> None:
         """
         Open the diagram directly in the default web browser without saving a file.
-        
+
         Creates a temporary HTML file with the diagram and opens it in the browser.
         The temporary file is automatically cleaned up after opening.
-        
+
         Args:
             include_diagram: Whether to include the Mermaid diagram. Default: True
             include_enums: Whether to include enum tables. Default: True
@@ -612,16 +597,12 @@ class PydanticVisualizer:
         import tempfile
 
         # Build the HTML content based on parameters
-        content = self.html(
-            include_diagram,
-            include_enums,
-            include_description
-        )
+        content = self.html(include_diagram, include_enums, include_description)
 
         # Create a temporary HTML file
-        with tempfile.NamedTemporaryFile(mode='w', suffix='.html', delete=False) as f:
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".html", delete=False) as f:
             f.write(content)
             temp_path = f.name
 
         # Open in browser
-        webbrowser.open('file://' + os.path.abspath(temp_path))
+        webbrowser.open("file://" + os.path.abspath(temp_path))

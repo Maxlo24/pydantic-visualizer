@@ -11,7 +11,7 @@ It shows:
 - Mixed relationship types in one diagram
 """
 
-from enum import Enum
+from enum import StrEnum
 from typing import Optional
 
 from pydantic import BaseModel, Field
@@ -20,8 +20,9 @@ from pydantic_visualizer import PydanticVisualizer
 
 
 # Define complex models with various relationship types
-class ProjectStatus(str, Enum):
+class ProjectStatus(StrEnum):
     """Project status enumeration."""
+
     PLANNING = "planning"
     IN_PROGRESS = "in_progress"
     REVIEW = "review"
@@ -31,21 +32,24 @@ class ProjectStatus(str, Enum):
 
 class Skill(BaseModel):
     """A skill that a team member can have."""
+
     name: str = Field(description="Skill name")
     level: int = Field(description="Proficiency level (1-5)", ge=1, le=5)
 
 
 class TeamMember(BaseModel):
     """Team member with skills and optional manager (self-referencing)."""
+
     name: str = Field(description="Team member name")
     email: str = Field(description="Email address")
     role: str = Field(description="Job role")
     skills: list[Skill] = Field(default_factory=list, description="List of skills")
-    manager: Optional['TeamMember'] = Field(None, description="Direct manager (optional)")
+    manager: Optional["TeamMember"] = Field(None, description="Direct manager (optional)")
 
 
 class Task(BaseModel):
     """A task within a project."""
+
     title: str = Field(description="Task title")
     description: str = Field(description="Task description")
     assigned_to: TeamMember | None = Field(None, description="Assigned team member")
@@ -55,6 +59,7 @@ class Task(BaseModel):
 
 class Milestone(BaseModel):
     """Project milestone with associated tasks."""
+
     name: str = Field(description="Milestone name")
     description: str = Field(description="Milestone description")
     tasks: list[Task] = Field(default_factory=list, description="Tasks in this milestone")
@@ -64,13 +69,14 @@ class Milestone(BaseModel):
 class Project(BaseModel):
     """
     Main project model with complex nested relationships.
-    
+
     This model demonstrates:
     - Enum fields (status)
     - List of nested models (team, milestones)
     - Optional nested model (lead)
     - Multiple levels of nesting (Project -> Milestone -> Task -> TeamMember -> Skill)
     """
+
     name: str = Field(description="Project name")
     description: str = Field(description="Project description")
     status: ProjectStatus = Field(description="Current project status")
@@ -125,5 +131,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-

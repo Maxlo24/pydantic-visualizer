@@ -9,7 +9,7 @@ It shows:
 - Using hex color codes for customization
 """
 
-from enum import Enum
+from enum import StrEnum
 
 from pydantic import BaseModel
 
@@ -17,8 +17,9 @@ from pydantic_visualizer import PydanticVisualizer
 
 
 # Define models
-class Category(str, Enum):
+class Category(StrEnum):
     """Product category."""
+
     ELECTRONICS = "electronics"
     CLOTHING = "clothing"
     FOOD = "food"
@@ -26,12 +27,14 @@ class Category(str, Enum):
 
 class Tag(BaseModel):
     """Product tag."""
+
     name: str
     color: str
 
 
 class Product(BaseModel):
     """Product with tags and category."""
+
     name: str
     price: float
     category: Category
@@ -48,10 +51,9 @@ def main():
     print("Monochrome theme.")
     visualizer_mono = PydanticVisualizer(
         object_color="#F5F5F5",  # Light gray for objects
-        list_color="#E0E0E0",     # Medium gray for lists
-        enum_color="#BDBDBD",     # Darker gray for enums
-        html_color="#90CAF9"      # Darker blue for html
-
+        list_color="#E0E0E0",  # Medium gray for lists
+        enum_color="#BDBDBD",  # Darker gray for enums
+        html_color="#90CAF9",  # Darker blue for html
     )
     visualizer_mono.set_datamodel(Product)
     visualizer_mono.show()
@@ -64,5 +66,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-

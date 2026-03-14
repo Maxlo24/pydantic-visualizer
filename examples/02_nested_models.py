@@ -9,7 +9,6 @@ It shows:
 - How relationships are automatically detected and visualized
 """
 
-
 from pydantic import BaseModel
 
 from pydantic_visualizer import PydanticVisualizer
@@ -18,6 +17,7 @@ from pydantic_visualizer import PydanticVisualizer
 # Define nested models
 class Address(BaseModel):
     """Address information."""
+
     street: str
     city: str
     country: str
@@ -26,6 +26,7 @@ class Address(BaseModel):
 
 class Company(BaseModel):
     """Company information."""
+
     name: str
     industry: str
     address: Address
@@ -33,6 +34,7 @@ class Company(BaseModel):
 
 class User(BaseModel):
     """User with nested address and optional company."""
+
     name: str
     email: str
     age: int
@@ -69,5 +71,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-

@@ -1,6 +1,6 @@
 """Tests for type checking utilities."""
 
-from enum import Enum
+from enum import StrEnum
 from typing import Optional, Union
 
 from pydantic import BaseModel
@@ -22,7 +22,7 @@ class TestModel(BaseModel):
     field: str
 
 
-class TestEnum(str, Enum):
+class TestEnum(StrEnum):
     """Test enum."""
 
     VALUE1 = "value1"
@@ -118,12 +118,12 @@ class TestFirstArg:
     def test_with_list_type(self):
         """Test with List type."""
         result = first_arg(list[str])
-        assert result == str
+        assert result is str
 
     def test_with_optional_type(self):
         """Test with Optional type."""
         result = first_arg(Optional[str])
-        assert result == str
+        assert result is str
 
     def test_with_no_args(self):
         """Test with type that has no args."""
@@ -133,7 +133,7 @@ class TestFirstArg:
     def test_with_union_type(self):
         """Test with Union type."""
         result = first_arg(Union[str, int])
-        assert result == str
+        assert result is str
 
 
 class TestIsOptionalType:
@@ -164,19 +164,19 @@ class TestUnwrapOptional:
     def test_with_optional_type(self):
         """Test unwrapping Optional type."""
         inner_type, is_optional = unwrap_optional(Optional[str])
-        assert inner_type == str
+        assert inner_type is str
         assert is_optional is True
 
     def test_with_union_with_none(self):
         """Test unwrapping Union with None."""
         inner_type, is_optional = unwrap_optional(Union[str, None])
-        assert inner_type == str
+        assert inner_type is str
         assert is_optional is True
 
     def test_with_regular_type(self):
         """Test with regular type (not optional)."""
         inner_type, is_optional = unwrap_optional(str)
-        assert inner_type == str
+        assert inner_type is str
         assert is_optional is False
 
     def test_with_union_without_none(self):
@@ -197,5 +197,3 @@ class TestUnwrapOptional:
         inner_type, is_optional = unwrap_optional(Optional[TestModel])
         assert inner_type == TestModel
         assert is_optional is True
-
-

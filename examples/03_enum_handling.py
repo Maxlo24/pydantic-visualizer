@@ -9,7 +9,7 @@ It shows:
 - Enum value tables in the output
 """
 
-from enum import Enum
+from enum import StrEnum
 
 from pydantic import BaseModel
 
@@ -17,24 +17,27 @@ from pydantic_visualizer import PydanticVisualizer
 
 
 # Define Enums
-class Role(str, Enum):
+class Role(StrEnum):
     """User role enumeration."""
+
     ADMIN = "admin"
     USER = "user"
     GUEST = "guest"
     MODERATOR = "moderator"
 
 
-class Status(str, Enum):
+class Status(StrEnum):
     """Account status enumeration."""
+
     ACTIVE = "active"
     INACTIVE = "inactive"
     SUSPENDED = "suspended"
     PENDING = "pending"
 
 
-class Priority(str, Enum):
+class Priority(StrEnum):
     """Task priority enumeration."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -44,6 +47,7 @@ class Priority(str, Enum):
 # Define models using Enums
 class User(BaseModel):
     """User model with role and status enums."""
+
     username: str
     email: str
     role: Role
@@ -52,6 +56,7 @@ class User(BaseModel):
 
 class Task(BaseModel):
     """Task model with priority enum."""
+
     title: str
     description: str
     priority: Priority
@@ -88,5 +93,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-

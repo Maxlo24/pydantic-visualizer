@@ -18,6 +18,7 @@ from pydantic_visualizer import PydanticVisualizer
 # Define a simple Pydantic model
 class Product(BaseModel):
     """A simple product model."""
+
     name: str
     price: float
     in_stock: bool
@@ -47,5 +48,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-

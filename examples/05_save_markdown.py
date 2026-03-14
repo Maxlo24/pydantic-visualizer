@@ -10,7 +10,7 @@ It shows:
 - Automatic filename generation
 """
 
-from enum import Enum
+from enum import StrEnum
 
 from pydantic import BaseModel, Field
 
@@ -18,8 +18,9 @@ from pydantic_visualizer import PydanticVisualizer
 
 
 # Define models
-class Priority(str, Enum):
+class Priority(StrEnum):
     """Task priority levels."""
+
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -28,6 +29,7 @@ class Priority(str, Enum):
 
 class Comment(BaseModel):
     """Comment on a task."""
+
     author: str = Field(description="Comment author")
     text: str = Field(description="Comment text")
     timestamp: str = Field(description="When the comment was made")
@@ -35,11 +37,13 @@ class Comment(BaseModel):
 
 class Task(BaseModel):
     """Task model with priority and comments."""
+
     title: str = Field(description="Task title")
     description: str = Field(description="Detailed task description")
     priority: Priority = Field(description="Task priority level")
     completed: bool = Field(default=False, description="Whether task is completed")
     comments: list[Comment] = Field(default_factory=list, description="Task comments")
+
 
 def main():
     # Create a visualizer instance
@@ -55,12 +59,11 @@ def main():
         output_folder="./examples/output",
         include_diagram=True,
         include_enums=True,
-        include_description=True
+        include_description=True,
     )
     print("   ✓ Saved to: ./output/employee_mermaid.md")
     print()
 
+
 if __name__ == "__main__":
     main()
-
-
