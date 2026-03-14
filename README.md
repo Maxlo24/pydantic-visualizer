@@ -1,7 +1,7 @@
 # Pydantic Visualizer
 
 [![PyPI version](https://badge.fury.io/py/pydantic-visualizer.svg)](https://badge.fury.io/py/pydantic-visualizer)
-[![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Convert your Pydantic models into beautiful Mermaid class diagrams with ease! 🎨
@@ -33,6 +33,11 @@ pip install pydantic-visualizer
 uv pip install pydantic-visualizer
 ```
 
+```bash
+uv add pydantic-visualizer
+```
+
+
 ### For Development
 
 ```bash
@@ -44,16 +49,9 @@ cd pydantic-visualizer
 uv pip install -e ".[dev]"
 ```
 
-## 🚀 Quick Start
+## 🚀 Turn this in mermaid diagram
 
 ```python
-
-from enum import Enum
-from typing import List
-from pydantic import BaseModel, Field
-from pydantic_visualizer import PydanticVisualizer
-
-
 # Define models
 class Priority(str, Enum):
     """Task priority levels."""
@@ -78,91 +76,44 @@ class Task(BaseModel):
     completed: bool = Field(default=False, description="Whether task is completed")
     comments: List[Comment] = Field(default_factory=list, description="Task comments")
 
-
-# Create the visualizer
-visualizer = PydanticVisualizer()
-
-# Add your models
-visualizer.set_datamodel(Task)
-
-# Get the Mermaid diagram code
-mermaid_code = visualizer.mermaid
-print(mermaid_code)
-
-# Save as Markdown
-generator.save_markdown("./output")
-
-# Or open in browser as HTML
-generator.show_html("./output")
+```
+## Task Diagram
+```mermaid
+classDiagram
+class Comment {
+    author   : str
+    text     : str
+    timestamp: str
+}
+style Comment fill: #FFEFDD, stroke: #000, stroke-width: 1px, color: #000
+class Task {
+    title      : str
+    description: str
+    priority   : Enum.Priority
+    completed  : bool
+    comments   : List[Comment]
+}
+style Task fill: #DDEDFF, stroke: #000, stroke-width: 1px, color: #000
+Task --* Comment : Has_list_of_Comment
 ```
 
-### Result TODO
 
 
+## Save it as an html file
 
-## 📖 Usage Examples
+See the [Related html file](./examples/output/task_mermaid.html).
 
-### Basic Model Visualization
+--------
 
-```python
-from pydantic import BaseModel
-from pydantic_visualizer import PydanticToMermaidGenerator
 
-class Product(BaseModel):
-    name: str
-    price: float
-    in_stock: bool
-
-generator = PydanticToMermaidGenerator(title="Product Model")
-generator.add_pydantic_model(Product)
-print(generator.get_mermaid())
-```
-
-### Custom Colors
-
-```python
-generator = PydanticToMermaidGenerator(
-    title="My Models",
-    object_color="#E8F4F8",      # Light blue for objects
-    list_color="#FFF4E6",         # Light orange for lists
-    enum_color="#E8F8F5"          # Light green for enums
-)
-```
-
-### Multiple Models
-
-```python
-generator = PydanticToMermaidGenerator(title="Complete System")
-generator.add_pydantic_model(User)
-generator.add_pydantic_model(Product)
-generator.add_pydantic_model(Order)
-
-# All models and their relationships will be in one diagram
-generator.save_markdown("complete_system.md")
-```
-
-### Working with Enums
-
-The generator automatically detects and visualizes Enum types with special formatting:
-
-```python
-from enum import Enum
-
-class Status(str, Enum):
-    PENDING = "pending"
-    APPROVED = "approved"
-    REJECTED = "rejected"
-
-class Request(BaseModel):
-    title: str
-    status: Status
-
-generator = PydanticToMermaidGenerator()
-generator.add_pydantic_model(Request)
-
-# Enums are shown in the diagram and detailed in tables
-print(generator.enum_tables_string)
-```
+> 📚 **More Examples**: Visit the [examples folder](./examples) for 8+ complete, runnable examples covering:
+> - Basic usage and nested models
+> - Enum handling and custom colors
+> - Complex relationships and self-referencing models
+> - Saving to Markdown/HTML and browser preview
+> - Adding multiple models to one diagram
+>
+> See the [Examples README](./examples/README.md) for detailed descriptions and usage instructions.
 
 ## 🎨 Diagram Features
 
@@ -178,15 +129,12 @@ print(generator.enum_tables_string)
 - **Dashed borders** for optional nested models
 - **Aligned field names** for better readability
 
-## 🤝 Contributing
-
-Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
 ### Development Setup
 
 ```bash
 # Clone the repository
-git clone https://github.com/maxime-gillot/pydantic-visualizer.git
+git clone https://github.com/Maxlo24/pydantic-visualizer.git
 cd pydantic-visualizer
 
 # Install dependencies with uv
@@ -213,18 +161,16 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📮 Contact & Support
 
-- **Issues**: [GitHub Issues](https://github.com/maxime-gillot/pydantic-visualizer/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/maxime-gillot/pydantic-visualizer/discussions)
+- **Issues**: [GitHub Issues](https://https://github.com/Maxlo24/pydantic-visualizer/issues)
+- **Discussions**: [GitHub Discussions](https://https://github.com/Maxlo24/pydantic-visualizer/discussions)
 
 ## 🗺️ Roadmap
 
 - [ ] Support for Pydantic v1 models
-- [ ] Additional diagram types (ER diagrams, sequence diagrams)
 - [ ] CLI tool for quick visualization
 - [ ] Integration with FastAPI for automatic API documentation
 - [ ] Export to additional formats (PNG, SVG, PDF)
-- [ ] Interactive web-based diagram editor
 
 ---
 
-Made with ❤️ by [Maxime Gillot](https://github.com/maxime-gillot)
+Made with ❤️ by [Maxime Gillot](https://github.com/Maxlo24)

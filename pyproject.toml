@@ -4,13 +4,13 @@ build-backend = "hatchling.build"
 
 [project]
 name = "pydantic-visualizer"
-version = "0.1.0"
+version = "0.1.1"
 description = "Convert Pydantic models to Mermaid class diagrams for easy visualization"
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
 authors = [
-    { name = "Maxime Gillot", email = "maxime.gillotibm.com@users.noreply.github.com" }
+    { name = "Maxime Gillot", email = "max.gillot.69@gmail.com" }
 ]
 keywords = [
     "pydantic",
@@ -92,7 +92,7 @@ ignore = [
 "__init__.py" = ["F401"]  # Allow unused imports in __init__.py
 
 [tool.mypy]
-python_version = "3.11"
+python_version = "3.10"
 warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = true
