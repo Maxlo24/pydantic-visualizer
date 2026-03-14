@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Task Diagram</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; margin: 20px; background-color: #f5f5f5; }
+h1 { color: #333; border-bottom: 3px solid #006699; padding-bottom: 10px; }
+h2 { color: #555; margin-top: 30px; }
+h2 + p { color: #666; font-style: italic; margin: 10px 0; }
+h4 { color: #666; margin-top: 20px; }
+table.dataframe { border-collapse: collapse; width: 100%; margin: 20px 0; background-color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+table.dataframe thead { background-color: #006699; color: white; }
+table.dataframe th { padding: 12px; text-align: left; font-weight: 600; border: none; }
+table.dataframe td { padding: 10px 12px; border-bottom: 1px solid #ddd; }
+table.dataframe tbody tr:hover { background-color: #f5f5f5; }
+table.dataframe tbody tr:last-child td { border-bottom: 2px solid #006699; }
+code { background-color: #f4f4f4; padding: 2px 6px; border-radius: 3px; font-family: "Courier New", monospace; color: #000; font-weight: bold; }
+.mermaid { background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin: 20px 0; }
+</style>
+</head>
+<body>
+<center><h1>Task Diagram</h1></center>
+<center><div class="mermaid">
+classDiagram
+class Comment {
+    author   : str
+    text     : str
+    timestamp: str
+}
+style Comment fill: #FFEFDD, stroke: #000, stroke-width: 1px, color: #000
+class Task {
+    title      : str
+    description: str
+    priority   : Enum.Priority
+    completed  : bool
+    comments   : List[Comment]
+}
+style Task fill: #DDEDFF, stroke: #000, stroke-width: 1px, color: #000
+Task --* Comment : Has_list_of_Comment
+</div></center>
+<h1>Enums Values</h1>
+<h4>Priority</h4>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>ENUM</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>LOW</code></td>
+      <td>low</td>
+    </tr>
+    <tr>
+      <td><code>MEDIUM</code></td>
+      <td>medium</td>
+    </tr>
+    <tr>
+      <td><code>HIGH</code></td>
+      <td>high</td>
+    </tr>
+    <tr>
+      <td><code>URGENT</code></td>
+      <td>urgent</td>
+    </tr>
+  </tbody>
+</table>
+<h1>Task - Model Descriptions</h1>
+<h2>Task</h2>
+<p>Task model with priority and comments.</p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Field</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>title</code></td>
+      <td>str</td>
+      <td>Task title</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><code>description</code></td>
+      <td>str</td>
+      <td>Detailed task description</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><code>priority</code></td>
+      <td>Enum.Priority</td>
+      <td>Task priority level</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><code>completed</code></td>
+      <td>bool</td>
+      <td>Whether task is completed</td>
+      <td><code>False</code></td>
+    </tr>
+    <tr>
+      <td><code>comments</code></td>
+      <td>List[Comment]</td>
+      <td>Task comments</td>
+      <td><code><factory></code></td>
+    </tr>
+  </tbody>
+</table>
+<h2>Comment</h2>
+<p>Comment on a task.</p>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Field</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>author</code></td>
+      <td>str</td>
+      <td>Comment author</td>
+    </tr>
+    <tr>
+      <td><code>text</code></td>
+      <td>str</td>
+      <td>Comment text</td>
+    </tr>
+    <tr>
+      <td><code>timestamp</code></td>
+      <td>str</td>
+      <td>When the comment was made</td>
+    </tr>
+  </tbody>
+</table>
+</body>
+</html>

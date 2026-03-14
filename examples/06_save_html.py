@@ -1,0 +1,68 @@
+"""
+Save HTML Example
+=================
+
+This example demonstrates how to save diagrams as HTML files.
+It shows:
+- Saving to an HTML file with embedded Mermaid rendering
+- Controlling what to include (diagram, enums, descriptions)
+- Specifying output folder
+- HTML files can be opened directly in a browser
+"""
+
+from enum import Enum
+
+from pydantic import BaseModel, Field
+
+from pydantic_visualizer import PydanticVisualizer
+
+
+# Define models
+class Priority(str, Enum):
+    """Task priority levels."""
+    LOW = "low"
+    MEDIUM = "medium"
+    HIGH = "high"
+    URGENT = "urgent"
+
+
+class Comment(BaseModel):
+    """Comment on a task."""
+    author: str = Field(description="Comment author")
+    text: str = Field(description="Comment text")
+    timestamp: str = Field(description="When the comment was made")
+
+
+class Task(BaseModel):
+    """Task model with priority and comments."""
+    title: str = Field(description="Task title")
+    description: str = Field(description="Detailed task description")
+    priority: Priority = Field(description="Task priority level")
+    completed: bool = Field(default=False, description="Whether task is completed")
+    comments: list[Comment] = Field(default_factory=list, description="Task comments")
+
+
+def main():
+    # Create a visualizer instance
+    visualizer = PydanticVisualizer()
+    visualizer.set_datamodel(Task)
+
+    print("Saving HTML files with different options...")
+    print()
+
+    # Save everything (default)
+    print("Saving complete HTML (diagram + enums + descriptions)...")
+    visualizer.save_html(
+        output_folder="./examples/output",
+        include_diagram=True,
+        include_enums=True,
+        include_description=True
+    )
+    print("   ✓ Saved to: ./output/task_mermaid.html")
+    print("   → Open this file in a browser to see the rendered diagram")
+
+
+if __name__ == "__main__":
+    main()
+
+
