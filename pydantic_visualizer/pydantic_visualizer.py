@@ -95,6 +95,32 @@ class PydanticVisualizer:
         # Process the new model
         self._add_class(model_cls)
 
+    def add_model(self, model_cls: type[BaseModel]) -> None:
+        """
+        Add an additional model to the existing diagram.
+
+        This method adds a new model to the current visualization without
+        resetting the state. The title is updated to include the new class name.
+
+        Args:
+            model_cls: A Pydantic BaseModel class to add to the visualization
+
+        Example:
+            >>> visualizer = PydanticVisualizer()
+            >>> visualizer.set_datamodel(User)
+            >>> visualizer.add_model(Product)
+            >>> visualizer.add_model(Order)
+            >>> # Title will be "User + Product + Order"
+        """
+        # Update title to include the new class name
+        if self.title and self.title != "Diagram":
+            self.title = f"{self.title} + {model_cls.__name__}"
+        else:
+            self.title = model_cls.__name__
+
+        # Process the new model (will skip if already seen)
+        self._add_class(model_cls)
+
     @property
     def mermaid(self) -> str:
         """

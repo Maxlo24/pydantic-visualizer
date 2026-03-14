@@ -111,7 +111,7 @@ class TestSetDatamodel:
         """Test setting a simple model."""
         visualizer = PydanticVisualizer()
         visualizer.set_datamodel(SimpleModel)
-        
+
         assert visualizer.model_cls == SimpleModel
         assert visualizer.title == "SimpleModel"
         assert "SimpleModel" in visualizer.seen_classes
@@ -122,7 +122,7 @@ class TestSetDatamodel:
         """Test setting a model with enum."""
         visualizer = PydanticVisualizer()
         visualizer.set_datamodel(Task)
-        
+
         assert "Priority" in visualizer.enum_dict
         assert "Status" in visualizer.enum_dict
         assert isinstance(visualizer.enum_dict["Priority"], pd.DataFrame)
@@ -132,11 +132,11 @@ class TestSetDatamodel:
         """Test that state is reset when setting a new model."""
         visualizer = PydanticVisualizer()
         visualizer.set_datamodel(SimpleModel)
-        
+
         initial_classes = len(visualizer.all_classes)
-        
+
         visualizer.set_datamodel(User)
-        
+
         assert visualizer.model_cls == User
         assert visualizer.title == "User"
         assert "SimpleModel" not in visualizer.seen_classes
@@ -146,7 +146,7 @@ class TestSetDatamodel:
         """Test setting a model with nested models."""
         visualizer = PydanticVisualizer()
         visualizer.set_datamodel(Project)
-        
+
         assert "Project" in visualizer.seen_classes
         assert "Task" in visualizer.seen_classes
         assert "User" in visualizer.seen_classes
@@ -161,7 +161,7 @@ class TestMermaidProperty:
         """Test mermaid property returns valid string."""
         visualizer = PydanticVisualizer()
         visualizer.set_datamodel(SimpleModel)
-        
+
         mermaid = visualizer.mermaid
         assert isinstance(mermaid, str)
         assert "classDiagram" in mermaid
@@ -171,7 +171,7 @@ class TestMermaidProperty:
         """Test mermaid includes relationships."""
         visualizer = PydanticVisualizer()
         visualizer.set_datamodel(User)
-        
+
         mermaid = visualizer.mermaid
         assert "User" in mermaid
         assert "Address" in mermaid
@@ -186,7 +186,7 @@ class TestMarkdownMethod:
         """Test markdown with all sections included."""
         visualizer = PydanticVisualizer()
         visualizer.set_datamodel(Task)
-        
+
         markdown = visualizer.markdown()
         assert "# Task Diagram" in markdown
         assert "```mermaid" in markdown
@@ -197,7 +197,7 @@ class TestMarkdownMethod:
         """Test markdown with only diagram."""
         visualizer = PydanticVisualizer()
         visualizer.set_datamodel(Task)
-        
+
         markdown = visualizer.markdown(
             include_diagram=True,
             include_enums=False,
@@ -212,7 +212,7 @@ class TestMarkdownMethod:
         """Test markdown without diagram."""
         visualizer = PydanticVisualizer()
         visualizer.set_datamodel(Task)
-        
+
         markdown = visualizer.markdown(include_diagram=False)
         assert "# Task Diagram" not in markdown
         assert "```mermaid" not in markdown
@@ -225,7 +225,7 @@ class TestHtmlMethod:
         """Test HTML has proper structure."""
         visualizer = PydanticVisualizer()
         visualizer.set_datamodel(SimpleModel)
-        
+
         html = visualizer.html()
         assert "<!DOCTYPE html>" in html
         assert "<html>" in html
@@ -238,7 +238,7 @@ class TestHtmlMethod:
         """Test HTML with all sections."""
         visualizer = PydanticVisualizer()
         visualizer.set_datamodel(Task)
-        
+
         html = visualizer.html()
         assert "<h1>Task Diagram</h1>" in html
         assert '<div class="mermaid">' in html
@@ -249,7 +249,7 @@ class TestHtmlMethod:
         """Test HTML uses custom colors."""
         visualizer = PydanticVisualizer(html_color="#FF0000")
         visualizer.set_datamodel(SimpleModel)
-        
+
         html = visualizer.html()
         assert "#FF0000" in html
 
@@ -261,7 +261,7 @@ class TestDescriptionProperty:
         """Test description property."""
         visualizer = PydanticVisualizer()
         visualizer.set_datamodel(User)
-        
+
         description = visualizer.description
         assert isinstance(description, str)
         assert "User" in description
@@ -271,7 +271,7 @@ class TestDescriptionProperty:
         """Test description includes field information."""
         visualizer = PydanticVisualizer()
         visualizer.set_datamodel(User)
-        
+
         description = visualizer.description
         assert "name" in description
         assert "age" in description
@@ -285,7 +285,7 @@ class TestEnumProperties:
         """Test enum_tables property."""
         visualizer = PydanticVisualizer()
         visualizer.set_datamodel(Task)
-        
+
         enum_tables = visualizer.enum_tables
         assert isinstance(enum_tables, dict)
         assert "Priority" in enum_tables
@@ -296,7 +296,7 @@ class TestEnumProperties:
         """Test enum_markdown_tables property."""
         visualizer = PydanticVisualizer()
         visualizer.set_datamodel(Task)
-        
+
         markdown = visualizer.enum_markdown_tables
         assert "# Enums Values" in markdown
         assert "Priority" in markdown
@@ -306,7 +306,7 @@ class TestEnumProperties:
         """Test enum_html_tables property."""
         visualizer = PydanticVisualizer()
         visualizer.set_datamodel(Task)
-        
+
         html = visualizer.enum_html_tables
         assert "<h1>Enums Values</h1>" in html
         assert "<h4>Priority</h4>" in html
@@ -317,7 +317,7 @@ class TestEnumProperties:
         """Test enum properties with no enums."""
         visualizer = PydanticVisualizer()
         visualizer.set_datamodel(SimpleModel)
-        
+
         assert visualizer.enum_tables == {}
         assert visualizer.enum_markdown_tables == ""
         assert visualizer.enum_html_tables == ""
@@ -330,7 +330,7 @@ class TestDescriptionTables:
         """Test description_tables returns proper structure."""
         visualizer = PydanticVisualizer()
         visualizer.set_datamodel(User)
-        
+
         tables = visualizer.description_tables
         assert isinstance(tables, dict)
         assert "User" in tables
@@ -341,7 +341,7 @@ class TestDescriptionTables:
         """Test description tables have expected columns."""
         visualizer = PydanticVisualizer()
         visualizer.set_datamodel(User)
-        
+
         user_df = visualizer.description_tables["User"]
         assert "Field" in user_df.columns
         assert "Type" in user_df.columns
@@ -350,7 +350,7 @@ class TestDescriptionTables:
         """Test description_markdown_tables property."""
         visualizer = PydanticVisualizer()
         visualizer.set_datamodel(User)
-        
+
         markdown = visualizer.description_markdown_tables
         assert "## User" in markdown
         assert "## Address" in markdown
@@ -359,7 +359,7 @@ class TestDescriptionTables:
         """Test description_html_tables property."""
         visualizer = PydanticVisualizer()
         visualizer.set_datamodel(User)
-        
+
         html = visualizer.description_html_tables
         assert "<h2>User</h2>" in html
         assert "<h2>Address</h2>" in html
@@ -373,13 +373,13 @@ class TestSaveMarkdown:
         """Test saving markdown to default location."""
         visualizer = PydanticVisualizer()
         visualizer.set_datamodel(SimpleModel)
-        
+
         with tempfile.TemporaryDirectory() as tmpdir:
             visualizer.save_markdown(output_folder=tmpdir)
-            
+
             expected_file = Path(tmpdir) / "simplemodel_mermaid.md"
             assert expected_file.exists()
-            
+
             content = expected_file.read_text()
             assert "SimpleModel" in content
             assert "```mermaid" in content
@@ -388,11 +388,11 @@ class TestSaveMarkdown:
         """Test saving markdown to custom location."""
         visualizer = PydanticVisualizer()
         visualizer.set_datamodel(User)
-        
+
         with tempfile.TemporaryDirectory() as tmpdir:
             custom_path = Path(tmpdir) / "custom" / "folder"
             visualizer.save_markdown(output_folder=custom_path)
-            
+
             expected_file = custom_path / "user_mermaid.md"
             assert expected_file.exists()
 
@@ -400,7 +400,7 @@ class TestSaveMarkdown:
         """Test saving markdown with selective content."""
         visualizer = PydanticVisualizer()
         visualizer.set_datamodel(Task)
-        
+
         with tempfile.TemporaryDirectory() as tmpdir:
             visualizer.save_markdown(
                 output_folder=tmpdir,
@@ -408,7 +408,7 @@ class TestSaveMarkdown:
                 include_enums=False,
                 include_description=False,
             )
-            
+
             expected_file = Path(tmpdir) / "task_mermaid.md"
             content = expected_file.read_text()
             assert "```mermaid" in content
@@ -422,13 +422,13 @@ class TestSaveHtml:
         """Test saving HTML to default location."""
         visualizer = PydanticVisualizer()
         visualizer.set_datamodel(SimpleModel)
-        
+
         with tempfile.TemporaryDirectory() as tmpdir:
             visualizer.save_html(output_folder=tmpdir)
-            
+
             expected_file = Path(tmpdir) / "simplemodel_mermaid.html"
             assert expected_file.exists()
-            
+
             content = expected_file.read_text()
             assert "<!DOCTYPE html>" in content
             assert "SimpleModel" in content
@@ -437,11 +437,11 @@ class TestSaveHtml:
         """Test saving HTML to custom location."""
         visualizer = PydanticVisualizer()
         visualizer.set_datamodel(User)
-        
+
         with tempfile.TemporaryDirectory() as tmpdir:
             custom_path = Path(tmpdir) / "output"
             visualizer.save_html(output_folder=custom_path)
-            
+
             expected_file = custom_path / "user_mermaid.html"
             assert expected_file.exists()
 
@@ -449,7 +449,7 @@ class TestSaveHtml:
         """Test saving HTML with selective content."""
         visualizer = PydanticVisualizer()
         visualizer.set_datamodel(Task)
-        
+
         with tempfile.TemporaryDirectory() as tmpdir:
             visualizer.save_html(
                 output_folder=tmpdir,
@@ -457,7 +457,7 @@ class TestSaveHtml:
                 include_enums=True,
                 include_description=True,
             )
-            
+
             expected_file = Path(tmpdir) / "task_mermaid.html"
             content = expected_file.read_text()
             assert '<div class="mermaid">' not in content
@@ -471,7 +471,7 @@ class TestPrivateMethods:
         """Test _type_name with enum type."""
         visualizer = PydanticVisualizer()
         visualizer.set_datamodel(Task)
-        
+
         type_name = visualizer._type_name(Priority)
         assert type_name == "Enum.Priority"
         assert "Priority" in visualizer.enum_dict
@@ -479,21 +479,21 @@ class TestPrivateMethods:
     def test_type_name_with_basemodel(self):
         """Test _type_name with BaseModel type."""
         visualizer = PydanticVisualizer()
-        
+
         type_name = visualizer._type_name(User)
         assert type_name == "User"
 
     def test_type_name_with_builtin(self):
         """Test _type_name with builtin type."""
         visualizer = PydanticVisualizer()
-        
+
         type_name = visualizer._type_name(str)
         assert type_name == "str"
 
     def test_format_annotation_optional(self):
         """Test _format_annotation with Optional type."""
         visualizer = PydanticVisualizer()
-        
+
         formatted = visualizer._format_annotation(Optional[str])
         assert "Optional" in formatted
         assert "str" in formatted
@@ -501,7 +501,7 @@ class TestPrivateMethods:
     def test_format_annotation_list(self):
         """Test _format_annotation with List type."""
         visualizer = PydanticVisualizer()
-        
+
         formatted = visualizer._format_annotation(List[str])
         assert "List" in formatted
         assert "str" in formatted
@@ -510,7 +510,7 @@ class TestPrivateMethods:
         """Test _add_relationship method."""
         visualizer = PydanticVisualizer()
         visualizer.set_datamodel(SimpleModel)
-        
+
         visualizer._add_relationship("Parent", "Child")
         assert len(visualizer.relationships) > 0
         assert "Parent" in visualizer.relationships[-1]
@@ -520,7 +520,7 @@ class TestPrivateMethods:
         """Test _add_relationship with optional flag."""
         visualizer = PydanticVisualizer()
         visualizer.set_datamodel(SimpleModel)
-        
+
         visualizer._add_relationship("Parent", "Child", is_optional=True)
         relationship = visualizer.relationships[-1]
         assert ".." in relationship
@@ -530,7 +530,7 @@ class TestPrivateMethods:
         """Test _add_relationship with list flag."""
         visualizer = PydanticVisualizer()
         visualizer.set_datamodel(SimpleModel)
-        
+
         visualizer._add_relationship("Parent", "Child", is_list=True)
         relationship = visualizer.relationships[-1]
         assert "*" in relationship
@@ -542,45 +542,45 @@ class TestEdgeCases:
 
     def test_model_with_no_fields(self):
         """Test with a model that has no fields."""
-        
+
         class EmptyModel(BaseModel):
             pass
-        
+
         visualizer = PydanticVisualizer()
         visualizer.set_datamodel(EmptyModel)
-        
+
         assert visualizer.model_cls == EmptyModel
         assert "EmptyModel" in visualizer.mermaid
 
     def test_deeply_nested_models(self):
         """Test with deeply nested models."""
-        
+
         class Level3(BaseModel):
             value: str
-        
+
         class Level2(BaseModel):
             level3: Level3
-        
+
         class Level1(BaseModel):
             level2: Level2
-        
+
         visualizer = PydanticVisualizer()
         visualizer.set_datamodel(Level1)
-        
+
         assert "Level1" in visualizer.seen_classes
         assert "Level2" in visualizer.seen_classes
         assert "Level3" in visualizer.seen_classes
 
     def test_circular_reference_prevention(self):
         """Test that circular references don't cause infinite loops."""
-        
+
         class Node(BaseModel):
             value: str
             children: Optional[List["Node"]] = None
-        
+
         visualizer = PydanticVisualizer()
         visualizer.set_datamodel(Node)
-        
+
         # Should complete without error
         assert "Node" in visualizer.seen_classes
         # Node should only appear once in seen_classes
@@ -588,13 +588,13 @@ class TestEdgeCases:
 
     def test_model_with_default_factory(self):
         """Test model with default_factory."""
-        
+
         class ModelWithFactory(BaseModel):
             items: List[str] = Field(default_factory=list)
-        
+
         visualizer = PydanticVisualizer()
         visualizer.set_datamodel(ModelWithFactory)
-        
+
         tables = visualizer.description_tables
         df = tables["ModelWithFactory"]
         # Check that default factory is represented
@@ -608,42 +608,43 @@ class TestIntegration:
         """Test complete workflow from model to output."""
         visualizer = PydanticVisualizer()
         visualizer.set_datamodel(Project)
-        
+
         # Check all components are generated
         assert visualizer.mermaid
         assert visualizer.markdown()
         assert visualizer.html()
         assert visualizer.description
         assert visualizer.enum_tables
-        
+
         # Check relationships are created
         assert len(visualizer.relationships) > 0
-        
+
         # Check all models are tracked
         assert len(visualizer.all_classes) > 0
 
     def test_multiple_model_switches(self):
         """Test switching between different models."""
         visualizer = PydanticVisualizer()
-        
+
         # First model
         visualizer.set_datamodel(SimpleModel)
         simple_mermaid = visualizer.mermaid
-        
+
         # Second model
         visualizer.set_datamodel(User)
         user_mermaid = visualizer.mermaid
-        
+
         # Third model
         visualizer.set_datamodel(Project)
         project_mermaid = visualizer.mermaid
-        
+
         # Each should be different
         assert simple_mermaid != user_mermaid
         assert user_mermaid != project_mermaid
-        
+
         # Final state should only reflect Project
         assert visualizer.title == "Project"
         assert visualizer.model_cls == Project
+
 
 # Made with Bob

@@ -7,7 +7,7 @@ name = "pydantic-visualizer"
 version = "0.1.0"
 description = "Convert Pydantic models to Mermaid class diagrams for easy visualization"
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.10"
 license = { text = "MIT" }
 authors = [
     { name = "Maxime Gillot", email = "maxime.gillotibm.com@users.noreply.github.com" }
