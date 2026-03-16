@@ -8,6 +8,11 @@ Convert your Pydantic models into beautiful Mermaid class diagrams with ease! �
 
 Pydantic Visualizer automatically generates visual representations of your Pydantic data models, making it easier to understand complex data structures, document your APIs, and communicate your data architecture.
 
+## 🚀 Turn your pydantic model in mermaid diagram
+
+![image](./img/exemple.jpg)
+
+
 ## ✨ Features
 
 - 🔄 **Automatic Conversion**: Transform Pydantic models to Mermaid diagrams instantly
@@ -38,20 +43,12 @@ uv add pydantic-visualizer
 ```
 
 
-### For Development
-
-```bash
-# Clone the repository
-git clone https://github.com/maxime-gillot/pydantic-visualizer.git
-cd pydantic-visualizer
-
-# Install with development dependencies using uv
-uv pip install -e ".[dev]"
-```
-
-## 🚀 Turn this in mermaid diagram
+## Exemple :
 
 ```python
+
+from pydantic_visualizer import PydanticVisualizer
+
 # Define models
 class Priority(str, Enum):
     """Task priority levels."""
@@ -76,34 +73,46 @@ class Task(BaseModel):
     completed: bool = Field(default=False, description="Whether task is completed")
     comments: List[Comment] = Field(default_factory=list, description="Task comments")
 
+
+# Create a visualizer instance
+visualizer = PydanticVisualizer()
+
+# Set the data model to visualize
+visualizer.set_datamodel(Task)
+
+# Add the second model (Nothing change here as Task is already set)
+visualizer.add_model(Task)
+
+# Print the Mermaid diagram code
+print(visualizer.mermaid)
+
+# Print the markdown enum table
+print(visualizer.enum_markdown_tables)
+
+# Returns a markdown description with tables for each class and subclass.
+print(visualizer.description)
+
+# Open the diagram in your browser
+visualizer.show()
+
+# Saving complete markdown (diagram + enums + descriptions)
+visualizer.save_markdown(
+    output_folder="./examples/output",
+    include_diagram=True,
+    include_enums=True,
+    include_description=True,
+)
+
+# Saving complete HTML (diagram + enums + descriptions)
+visualizer.save_html(
+    output_folder="./examples/output",
+    include_diagram=True,
+    include_enums=True,
+    include_description=True,
+)
+
 ```
-## Task Diagram
-```mermaid
-classDiagram
-class Comment {
-    author   : str
-    text     : str
-    timestamp: str
-}
-style Comment fill: #FFEFDD, stroke: #000, stroke-width: 1px, color: #000
-class Task {
-    title      : str
-    description: str
-    priority   : Enum.Priority
-    completed  : bool
-    comments   : List[Comment]
-}
-style Task fill: #DDEDFF, stroke: #000, stroke-width: 1px, color: #000
-Task --* Comment : Has_list_of_Comment
-```
 
-
-
-## Save it as an html file
-
-See the [Related html file](./examples/output/task_mermaid.html).
-
---------
 
 
 > 📚 **More Examples**: Visit the [examples folder](https://github.com/Maxlo24/pydantic-visualizer/blob/main/examples) for 8+ complete, runnable examples covering:
@@ -114,6 +123,8 @@ See the [Related html file](./examples/output/task_mermaid.html).
 > - Adding multiple models to one diagram
 >
 > See the [Examples README](https://github.com/Maxlo24/pydantic-visualizer/blob/main/examples/README.md) for detailed descriptions and usage instructions.
+
+--------
 
 ## 🎨 Diagram Features
 

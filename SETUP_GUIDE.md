@@ -153,6 +153,14 @@ For automated publishing to PyPI, you need to set up GitHub secrets:
 
 The GitHub Action will automatically build and publish to PyPI.
 
+### Using UV:
+
+```bash
+uv build --no-sources
+````
+```bash
+uv publish 
+````
 ### Option 2: Manual Publishing
 
 ```bash
