@@ -1,4 +1,6 @@
 # Setup Guide for pydantic-visualizer
+[![Github All Releases](https://img.shields.io/github/downloads/Maxlo24/pydantic-visualizer/total.svg)]()
+
 
 This guide will help you set up the pydantic-visualizer package for development and publishing.
 

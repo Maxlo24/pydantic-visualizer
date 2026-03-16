@@ -2,6 +2,7 @@
 
 [![PyPI version](https://badge.fury.io/py/pydantic-visualizer.svg)](https://badge.fury.io/py/pydantic-visualizer)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![Pydantic v2](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/pydantic/pydantic/main/docs/badge/v2.json)](https://pydantic.dev)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Convert your Pydantic models into beautiful Mermaid class diagrams with ease! 🎨
@@ -10,7 +11,7 @@ Pydantic Visualizer automatically generates visual representations of your Pydan
 
 ## 🚀 Turn your pydantic model in mermaid diagram
 
-![image](./img/exemple.jpg)
+![](https://github.com/Maxlo24/pydantic-visualizer/blob/main/img/exemple.jpg?raw=true)
 
 
 ## ✨ Features
