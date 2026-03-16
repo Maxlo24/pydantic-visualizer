@@ -157,10 +157,11 @@ The GitHub Action will automatically build and publish to PyPI.
 
 ```bash
 uv build --no-sources
-````
+```
+
 ```bash
 uv publish 
-````
+```
 ### Option 2: Manual Publishing
 
 ```bash
